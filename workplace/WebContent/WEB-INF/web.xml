@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<servlet>
+	    <servlet-name>shiyan1Servlet</servlet-name>
+	    <servlet-class>myservlet.control.Shiyan1_Servlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>shiyan1Servlet</servlet-name>
+	  <url-pattern>/shiyan1Servlet</url-pattern>
+	</servlet-mapping>
+</web-app>
+
+
