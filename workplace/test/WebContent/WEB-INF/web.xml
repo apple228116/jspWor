@@ -8,6 +8,14 @@
 	  <servlet-name>shiyan1Servlet</servlet-name>
 	  <url-pattern>/shiyan1Servlet</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	    <servlet-name>ji</servlet-name>
+	    <servlet-class>myservlet.control.ji</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>ji</servlet-name>
+	  <url-pattern>/ji</url-pattern>
+	</servlet-mapping>
 </web-app>
 
 
