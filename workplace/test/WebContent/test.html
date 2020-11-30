@@ -21,24 +21,7 @@
   
   
   <script>
-  	$('#ji').click(function(){
-  		$.ajax({
-  			url: 'shiyan1Servlet',
-  			method: 'GET',
-  			success: function(data){
-  				alert(data.msg)
-  				data = data || '没有东西'
-	  			var x = 'a<br/>'
-	  			for(var a in data.msg){
-	  				x += a + '---' + data[a] + '<br/>'
-	  			}
-  				$('#show').html(x)
-  			},
-  			error:function(e){
-  				alert('请求错误！')
-  			}
-  		})
-  	})
+  	alert(sessionStorage.getItem('name'))
   </script>
 </body>
 </html>
