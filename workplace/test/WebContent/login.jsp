@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE">
 <html>
 <head>
@@ -6,19 +8,21 @@
 <title>全民制作人大家好</title>
 <style>
 	#ti{
-    text-align: center;
-    height: 300px;
+		opacity: 0;
+		width: 600px;
+		height: 200px;
+		margin-left: 50%;
 		transform: translateX(-50%);
-    background-color: aliceblue;
+	}
 </style>
 </head>
 <body>
 	<script src="./jquery.min.js"></script>
     <script src="./bootstrap.min.js"></script>
     <h1>欢迎来到城院社团管理系统!</h1>
-    <p id='ti'>鸡你太美！</p>
+    p
     <div class="d-flex justify-content-center" id="formbox">
-      <form class="form-signin align-self-center" onclick='return false'>
+      <form class="form-signin align-self-center">
         <h1 class="mb-3 font-weight-normal">Please sign in</h1>
         <label>
           <span class='md-3'>Username</span>
@@ -41,7 +45,27 @@
       </form>
     </div>
     <script>
-      
+    
+    	$('#login').click(function(){
+    		$.ajax({
+				url: 'shiyan1Servlet',
+				dataType: 'json',
+				headers:{"Content-Type":"text/plain;charset=UTF-8"},
+				data: {'username':'lubenwei','password':'niubi','tableName':'user'},
+				success:function(data){
+					alert('登录成功！')
+					if(!data.msg){
+						alert(data[0][0])
+					}else{
+						alert("账号或密码错误！")
+					}
+					
+				},
+				error:function(){
+					alert('请求错误！')
+				}
+			})
+    	})
     </script>
 </body>
 </html>
