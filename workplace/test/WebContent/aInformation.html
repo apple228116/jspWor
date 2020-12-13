@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社团详情</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src="./jquery.min.js"></script>
+    <script src="./bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./animate.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #imgContainer{
+            height: 600px;
+            width: 100%;
+            background-color: antiquewhite;
+            text-align: center;
+        }
+        #show{
+            width: auto;
+            height: 100%;
+            margin: 0 auto;
+        }
+        h1,h2,h3,h4,h5,h6{
+            text-align: center;
+            color: #f40;
+            padding: 0;
+            margin: 0;
+        }
+        footer{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100px;
+            background-color: rgb(139,69,19);
+            line-height: 100px;
+            text-align: center;
+        }
+        main{
+            background-color: rgba(193,255,193,.5);
+            min-height: 1000px;
+        }
+        .word{
+            text-indent: 2em;
+            padding: 20px;
+            background-color: rgba(255,252,153,.5);
+            color: #f40;
+        }
+    </style>
+</head>
+<body>
+    <header id='imgContainer'>
+        <img src="" alt="没图片了呗" id='show'>
+    </header>
+
+    <main>
+        <h1></h1>
+        <h2></h2>
+        <h3></h3>
+        <div class="word"></div>
+    </main>
+    
+    <footer>
+        <button class="btn btn-warning" id='join'>申请加入!</button>
+    </footer>
+
+
+    <script>
+        var title = sessionStorage.getItem('pageTitle')
+        $('#show').attr('src',sessionStorage.getItem('imgSrc'))
+        $(document).attr('title',title)
+        $('h1').text(title)
+        $.ajax({
+				url: 'shiyan1Servlet',
+				dataType: 'json',
+				headers:{"Content-Type":"text/plain;charset=UTF-8"},
+				data: {
+					'play':'6',
+					'tableName':'information',
+                    'Aname': sessionStorage.getItem('pageTitle')
+					},
+				success:function(data){
+					if(!data.msg){
+                        $('h3').text(data[0][3])
+                        $('.word').eq(0).text(data[0][4])
+					}else{
+						alert("获取信息错误")
+						return false;
+					}
+					
+				},
+				error:function(){
+					alert('请求错误！')
+				}
+            })
+        $('#join').click(function(){
+            if(sessionStorage.getItem('name')){
+                $.ajax({
+                    url: 'shiyan1Servlet',
+                    dataType: 'json',
+                    headers:{"Content-Type":"text/plain;charset=UTF-8"},
+                    data: {
+                        'play':'21',
+                        'tableName':'joinassociation',
+                        'name': sessionStorage.getItem('name'),
+                        'Aname': sessionStorage.getItem('pageTitle'),
+                        'uid': sessionStorage.getItem('uid')
+                        },
+                    success:function(data){
+                        if(!parseInt(data.msg)){
+                            alert('申请成功！')
+                        }else{
+                            alert("申请失败！")
+                        }
+                        
+                    },
+                    error:function(){
+                        alert('请求错误！')
+                    }
+                })
+            }else{
+                alert('您尚未登录！请登录或者注册个号吧！')
+                $(location).attr('href','login.html')
+            }
+        })
+        
+    </script>
+</body>
+</html>

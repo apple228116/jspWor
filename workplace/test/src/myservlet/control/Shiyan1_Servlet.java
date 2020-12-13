@@ -9,7 +9,7 @@ import cn.fyfye.json.FyJsonUtil;
 public class Shiyan1_Servlet extends HttpServlet{
    public void init(ServletConfig config) throws ServletException{
       super.init(config);
-      try {  Class.forName("com.mysql.jdbc.Driver");
+      try {  Class.forName("com.mysql.cj.jdbc.Driver");
       }
       catch(Exception e){} 
    }
@@ -18,6 +18,9 @@ public class Shiyan1_Servlet extends HttpServlet{
       request.setCharacterEncoding("UTF-8");
       String username = request.getParameter("username");
       String password= request.getParameter("password");
+      String name = request.getParameter("name");
+      String Aname = request.getParameter("Aname");
+      int play = Integer.parseInt(request.getParameter("play"));
       String tableName = request.getParameter("tableName");
       response.setCharacterEncoding("UTF-8");
       
@@ -40,39 +43,188 @@ public class Shiyan1_Servlet extends HttpServlet{
           con=DriverManager.getConnection(uri,"root","root");
           Statement sql=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                                                 ResultSet.CONCUR_READ_ONLY);
-          String Sql = "SELECT * FROM "+tableName + " where username='"+username+"' and password='"+password+"';";
-          System.out.println(Sql);
-          ResultSet rs=sql.executeQuery(Sql);
-          ResultSetMetaData metaData = rs.getMetaData();
-          int columnCount = metaData.getColumnCount(); //得到结果集的列数
-          String []columnName = new String[columnCount];
-          for(int i=0;i<columnName.length;i++) {
-             columnName[i] = metaData.getColumnName(i+1); //得到列名
-          }
-          recordBean.setColumnName(columnName);   //更新Javabean数据模型
-          rs.last();
-          int rowNumber=rs.getRow();  //得到记录数
-          if(rowNumber!=0) {
-        	  String [][] tableRecord=recordBean.getTableRecord();
-              tableRecord = new String[rowNumber][columnCount];
-              rs.beforeFirst();
-              int i=0;
-              while(rs.next()){
-                for(int k=0;k<columnCount;k++) 
-                  tableRecord[i][k] = rs.getString(k+1);
-                  i++; 
+          
+          if(play==1) {
+        	  System.out.println(play);
+        	  String Sql = "SELECT * FROM "+tableName + " where username='"+username+"' and password='"+password+"';";
+              System.out.println(Sql);
+              ResultSet rs=sql.executeQuery(Sql);
+              ResultSetMetaData metaData = rs.getMetaData();
+              int columnCount = metaData.getColumnCount(); //得到结果集的列数
+              String []columnName = new String[columnCount];
+              for(int i=0;i<columnName.length;i++) {
+                 columnName[i] = metaData.getColumnName(i+1); //得到列名
               }
-             
-              recordBean.setTableRecord(tableRecord); //更新Javabean数据模型
-              response.getWriter().print(FyJsonUtil.convertObjectToJSON(tableRecord));
-          }else {
-        	  response.getWriter().write("{\"msg\":\"error\"}");
+              recordBean.setColumnName(columnName);   //更新Javabean数据模型
+              rs.last();
+              int rowNumber=rs.getRow();  //得到记录数
+              if(rowNumber!=0) {
+            	  String [][] tableRecord=recordBean.getTableRecord();
+                  tableRecord = new String[rowNumber][columnCount];
+                  rs.beforeFirst();
+                  int i=0;
+                  while(rs.next()){
+                    for(int k=0;k<columnCount;k++) 
+                      tableRecord[i][k] = rs.getString(k+1);
+                      i++; 
+                  }
+                 
+                  recordBean.setTableRecord(tableRecord); //更新Javabean数据模型
+                  response.getWriter().print(FyJsonUtil.convertObjectToJSON(tableRecord));
+              }else {
+            	  response.getWriter().write("{\"msg\":\"error\"}");
+              }
+              con.close();
+          }else if(play == 2) {
+        	  try {
+        		  String condition = "INSERT INTO "+tableName+" VALUES"+
+            		      "(0,"+"'"+username+"','"+password+"','"+name+"','"+Aname+"',1)";
+            	  System.out.println(condition);
+        		  sql.executeUpdate(condition);
+            	  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(IOException exp) {
+        		  System.out.println("增加数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
+        	  
+          }else if(play==3) {  //更新
+        	  String role = request.getParameter("role");
+        	  String uid = request.getParameter("uid");
+        	  String condition = "update "+tableName+" set name='"+name+"', role= '"+role
+        			  +"' where id="+uid;
+        	  System.out.println(condition);
+        	  try {
+        		  sql.executeUpdate(condition);
+        		  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(Exception exp) {
+        		  System.out.println("修改数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
+          }else if(play==31) {  //更新社团
+        	  String uid = request.getParameter("uid");
+        	  String condition = "update "+tableName+" set Aname='"+Aname+"', role=1 where id="+uid;
+        	  System.out.println(condition);
+        	  try {
+        		  sql.executeUpdate(condition);
+        		  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(Exception exp) {
+        		  System.out.println("修改数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
+          }else if(play==4) {
+        	  String uid = request.getParameter("uid");
+        	  String condition = "delete from "+tableName+"  where id="+uid;
+        	  System.out.println(condition);
+        	  try {
+        		  sql.executeUpdate(condition);
+        		  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(Exception exp) {
+        		  System.out.println("修改数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
+          }else if(play == 5) {
+        	  System.out.println(play);
+        	  String Sql = "SELECT * FROM "+tableName + ";";
+              System.out.println(Sql);
+              ResultSet rs=sql.executeQuery(Sql);
+              ResultSetMetaData metaData = rs.getMetaData();
+              int columnCount = metaData.getColumnCount(); //得到结果集的列数
+              String []columnName = new String[columnCount];
+              for(int i=0;i<columnName.length;i++) {
+                 columnName[i] = metaData.getColumnName(i+1); //得到列名
+              }
+              recordBean.setColumnName(columnName);   //更新Javabean数据模型
+              rs.last();
+              int rowNumber=rs.getRow();  //得到记录数
+              if(rowNumber!=0) {
+            	  String [][] tableRecord=recordBean.getTableRecord();
+                  tableRecord = new String[rowNumber][columnCount];
+                  rs.beforeFirst();
+                  int i=0;
+                  while(rs.next()){
+                    for(int k=0;k<columnCount;k++) 
+                      tableRecord[i][k] = rs.getString(k+1);
+                      i++; 
+                  }
+                 
+                  recordBean.setTableRecord(tableRecord); //更新Javabean数据模型
+                  response.getWriter().print(FyJsonUtil.convertObjectToJSON(tableRecord));
+              }else {
+            	  response.getWriter().write("{\"msg\":\"error\"}");
+              }
+              con.close();
+          }else if(play == 6) {
+        	  System.out.println(play);
+        	  String Sql = "SELECT * FROM "+tableName +" where Aname ='"+ Aname + "';";
+              System.out.println(Sql);
+              ResultSet rs=sql.executeQuery(Sql);
+              ResultSetMetaData metaData = rs.getMetaData();
+              int columnCount = metaData.getColumnCount(); //得到结果集的列数
+              String []columnName = new String[columnCount];
+              for(int i=0;i<columnName.length;i++) {
+                 columnName[i] = metaData.getColumnName(i+1); //得到列名
+              }
+              recordBean.setColumnName(columnName);   //更新Javabean数据模型
+              rs.last();
+              int rowNumber=rs.getRow();  //得到记录数
+              if(rowNumber!=0) {
+            	  String [][] tableRecord=recordBean.getTableRecord();
+                  tableRecord = new String[rowNumber][columnCount];
+                  rs.beforeFirst();
+                  int i=0;
+                  while(rs.next()){
+                    for(int k=0;k<columnCount;k++) 
+                      tableRecord[i][k] = rs.getString(k+1);
+                      i++; 
+                  }
+                 
+                  recordBean.setTableRecord(tableRecord); //更新Javabean数据模型
+                  response.getWriter().print(FyJsonUtil.convertObjectToJSON(tableRecord));
+              }else {
+            	  response.getWriter().write("{\"msg\":\"error\"}");
+              }
+              con.close();
+          }else if(play == 21) {
+        	  try {
+        		  String uid = request.getParameter("uid");
+        		  String condition = "INSERT INTO "+tableName+" VALUES"+
+            		      "("+uid+","+"'"+name+"','"+Aname+"',0)";
+            	  System.out.println(condition);
+        		  sql.executeUpdate(condition);
+            	  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(IOException exp) {
+        		  System.out.println("增加数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
+          }else if(play == 22) {
+        	  try {
+        		  String say = request.getParameter("say");
+        		  String condition = "INSERT INTO "+tableName+" VALUES"+
+            		      "(0,"+"'"+Aname+"','"+name+"','"+say+"')";
+            	  System.out.println(condition);
+        		  sql.executeUpdate(condition);
+            	  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(IOException exp) {
+        		  System.out.println("增加数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
+          }else if(play == 23) {
+        	  try {
+        		  String title = request.getParameter("title");
+        		  String go_time = request.getParameter("go_time");
+        		  String content = request.getParameter("content");
+        		  String condition = "INSERT INTO "+tableName+" VALUES"+
+            		      "(0,"+"'"+title+"','"+go_time+"','"+content+"',null,'"+Aname+"')";
+            	  System.out.println(condition);
+        		  sql.executeUpdate(condition);
+            	  response.getWriter().write("{\"msg\":\"0\"}");
+        	  }catch(IOException exp) {
+        		  System.out.println("增加数据错误！");
+        		  response.getWriter().write("{\"msg\":\"1\"}");
+        	  }
           }
           
-         
           
-          
-          con.close();
      }
      catch(SQLException e){
     //	 response.getWriter().write("{\"msg\":\"error\"}");

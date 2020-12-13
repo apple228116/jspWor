@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +15,27 @@
 <body>
   <script src="./jquery.min.js"></script>
   <script src="./bootstrap.min.js"></script>
-  
-  <p id='show'></p>
-  <button id='ji'>按下！</button>
+  <table>
+    <tbody>
+
+    </tbody>
+  </table>
   
   
   <script>
-  	alert(sessionStorage.getItem('name'))
+    for(var i=0;i<data.length;i++){
+      $("tbody").append("<tr>")
+      for(var j=0;j<data[i].length-1;j++){
+        $("tbody").append("<td>"+data[i][j]+"</td>")
+      }
+      if(role===2){
+        $("tbody").append("<td><button type='button' class='btn btn-success'>同意</button><button type='button' class='btn btn-danger'>拒绝</button></td></tr>");
+        
+      }else{
+        $("tbody").append("<td><button type='button' class='btn btn-success'>审核中</button></td>")
+      }
+    }
+    console.log($('#x').parent().siblings('[data-name]').text())
   </script>
 </body>
 </html>

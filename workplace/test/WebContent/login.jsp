@@ -19,20 +19,20 @@
 <body>
 	<script src="./jquery.min.js"></script>
     <script src="./bootstrap.min.js"></script>
-    <h1>欢迎来到城院社团管理系统!</h1>
-    p
+    <h1 style='text-align:center;'>欢迎来到城院社团管理系统!</h1>
+    
     <div class="d-flex justify-content-center" id="formbox">
-      <form class="form-signin align-self-center">
+      <form id='form' action='play.jsp' class="form-signin align-self-center">
         <h1 class="mb-3 font-weight-normal">Please sign in</h1>
         <label>
           <span class='md-3'>Username</span>
-          <input type="text" value='a' id="inputEmail" class="form-control md-9" placeholder="Username" required autofocus>
+          <input type="text" value='caixukun' id="username" class="form-control md-9" placeholder="Username" required autofocus>
         </label>
         
         <br>
         <label>
           Password
-          <input type="password" value='a' id="inputPassword" class="form-control" placeholder="Password" required>
+          <input type="password" value='lanqiu' id="password" class="form-control" placeholder="Password" required>
         </label>
 
         <div class="checkbox mb-3">
@@ -45,27 +45,32 @@
       </form>
     </div>
     <script>
-    
-    	$('#login').click(function(){
-    		$.ajax({
-				url: 'shiyan1Servlet',
-				dataType: 'json',
-				headers:{"Content-Type":"text/plain;charset=UTF-8"},
-				data: {'username':'lubenwei','password':'niubi','tableName':'user'},
-				success:function(data){
-					alert('登录成功！')
-					if(!data.msg){
-						alert(data[0][0])
-					}else{
-						alert("账号或密码错误！")
-					}
+    $('#form').submit(function(e){
+    	e.preventDefault();
+    	$.ajax({
+			url: 'shiyan1Servlet',
+			dataType: 'json',
+			headers:{"Content-Type":"text/plain;charset=UTF-8"},
+			data: {'username':$('#username').val(),'password':$('#password').val(),'tableName':'user'},
+			success:function(data){
+				alert(data[0][3])
+				sessionStorage.setItem('name',data[0][3])
+				alert('登录成功！')
+				if(!data.msg){
+					$(location).attr('href', "play.jsp");
 					
-				},
-				error:function(){
-					alert('请求错误！')
+				}else{
+					alert("账号或密码错误！")
+					return false;
 				}
-			})
-    	})
+				
+			},
+			error:function(){
+				alert('请求错误！')
+			}
+		})
+    })
+    	
     </script>
 </body>
 </html>

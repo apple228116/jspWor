@@ -8,73 +8,7 @@
     <script src="./jquery.min.js"></script>
     <script src="./bootstrap.min.js"></script>
     <link rel="stylesheet" href="./animate.min.css">
-    <style>
-      #carouselExampleCaptions{
-        background: url('./images/city.jpg');
-        background-size: 100% 100%;
-        width: 100%;
-        height: 600px;
-      }
-      #carouselExampleCaptions img{
-        height: 600px;
-        width: auto;
-        margin: 0 auto;
-      }
-      .carousel-item{
-        height: 100%;
-        width: 100%;
-      }
-      #title{
-        color: #f40;
-        background-color: rgba(235,225,209,.7);
-        z-index: 999;
-        text-align: center;
-      }
-      h1,h2,h3,h4,h5,h6{
-        text-align: center;
-        color: #f40;
-      }
-      em{
-        font-style: normal;
-        display: block;
-        color: #f40;
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
-        font-size: 22px;
-      }
-      em:hover{
-        cursor: pointer;
-        background-color: skyblue;
-        text-decoration: underline;
-      }
-      .clickClass{
-        
-        background-color: yellowgreen;
-      }
-      .row{
-        background-color: azure;
-      }
-      #page>div{
-        display: none;
-      }
-      main{
-        min-height: 1000px;
-        background-color:burlywood;
-      }
-      footer{
-        height: 300px;
-        background-color: aliceblue;
-      }
-      .card:hover{
-        cursor: pointer;
-        background-color:orange;
-        color: #f40;
-      }
-      #pageJudge>.col{
-        border-radius: 15px;
-      }
-    </style>
+    <link rel="stylesheet" href="./play.css">
 </head>
 <body>
 
@@ -104,7 +38,7 @@
           <div class="carousel-item">
             <img src="./images/goodshow (62).png" class="d-block" alt="...">
             <div class="carousel-caption d-none d-md-block">
-              <h5>亚索，接好了！一库~~~</h5>
+              <h5>他强任他强，老子尼克杨！</h5>
             </div>
           </div>
           <div class="carousel-item">
@@ -133,8 +67,69 @@
   </header>
     
   <main>
-    <p id='title' class='showTitle'><span id='name'></span>,欢迎您！您的身份是<span id='Aname'></span><span id='role'></span></p>
-    <p class='showTitle'>欢迎您！游客6666</p>
+
+    <!-- 隐藏的模块框 -->
+    <div class="modal fade" id="exampleModalLong">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">修改信息</h5>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label>名称: <input type="text" id='mName'></label>
+              </div>
+              <div class="form-group">
+                <label>角色: 
+                  <select name="" id="mRole">
+                    <option value="1">会员</option>
+                    <option value="2">管理员</option>
+                  </select>
+                </label> 
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id='sureUpdate'>确认修改</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 隐藏的模块框2 -->
+    <div class="modal fade" id="exampleModalLong2">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">搞事情</h5>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label>标题: <input type="text" id='mTitle'></label>
+              </div>
+              <div class="form-group">
+                <label>搞事时间: <input type="text" id="mTime"></label>
+              </div>
+              <div class="form-group">
+                <label>搞什么事情: <input type="text" id="mThing"></label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id='sureDo'>确认修改</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <p id='title' class='showTitle'><span id='name'></span>,欢迎您！您的身份是<span id='Aname'></span><span id='role'></span><a href="login.html">退出</a></p>
+    <p class='showTitle'>哥只是个游客~ 赶紧物色个社团吧！<a href="register.html">申请账号</a></p>
     <h1>加入一个社团，发现更好的自己！</h1>
     <div class="container-fluid">
       <div class='row' id='pageJudge'>
@@ -145,7 +140,7 @@
           我的社团成员
         </em>
         <em class='col'>
-          我的社团公告
+          我的社团文章
         </em>
         <em class='col'>
           我的社团活动
@@ -158,49 +153,50 @@
       <div id='page'>
         
         <div  class="clearfix">
-          <div class="card float-left" style="width: 300px;">
+          <div class="card float-left" style="width: 250px;">
             <img class="card-img-top" src="./images/goodshow (55).png" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">游泳社</h5>
               <p class="card-text">游泳不是一种优雅，而是唯一的优雅。</p>
-              <button class="btn btn-warning">加入</button>
+              <button class="btn btn-warning goCenter">查看详情</button>
             </div>
           </div>
-          <div class="card float-left" style="width: 300px;">
+          <div class="card float-left" style="width: 250px;">
             <img class="card-img-top" src="./images/goodshow (61).png" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">舞蹈社</h5>
               <p class="card-text">每个不曾起舞的一天，都是对生命的一种辜负。</p>
-              <button class="btn btn-warning">加入</button>
+              <button class="btn btn-warning goCenter">查看详情</button>
             </div>
           </div>
-          <div class="card float-left" style="width: 300px;">
+          <div class="card float-left" style="width: 250px;">
             <img class="card-img-top" src="./images/goodshow (62).png" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">足球社</h5>
-              <p class="card-text">亚索，接好了！一库~~~</p>
-              <button class="btn btn-warning">加入</button>
+              <p class="card-text">他强任他强，老子尼克杨！</p>
+              <button class="btn btn-warning goCenter">查看详情</button>
             </div>
           </div>
-          <div class="card float-left" style="width: 300px;">
+          <div class="card float-left" style="width: 250px;">
             <img class="card-img-top" src="./images/goodshow (48).png" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">羽毛球社</h5>
               <p class="card-text">加油!你差点就防到我了。</p>
-              <button class="btn btn-warning">加入</button>
+              <button class="btn btn-warning goCenter">查看详情</button>
             </div>
           </div>
-          <div class="card float-left" style="width: 300px;">
+          <div class="card float-left" style="width: 250px;">
             <img class="card-img-top" src="./images/goodshow (16).png" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">探险社</h5>
               <p class="card-text">待我君临天下，许你四海为家。</p>
-              <button class="btn btn-warning">加入</button>
+              <button class="btn btn-warning goCenter">查看详情</button>
             </div>
           </div>
         </div>
 
         <div id='Ainformation'>
+          
           <table class="table">
             <thead>
               <tr>
@@ -218,17 +214,18 @@
         </div>
 
         <div id='advertise'>
-          <h1>Aname 足球社</h1>
-          <h3>Apinfo 我用双脚成就你的梦想</h3>
-          <h2>content</h2>
+          <div class='say align-items-center'>
+            <div class="d-flex justify-content-center">
+              <input type="text" placeholder="发表你的留言吧!" id='advertiseSay' />
+              <button type="button" class="btn btn-warning" id='advertiseBtn'>发表</button>
+            </div>
+          </div>
         </div>
 
         <div id='information'>
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">title 友谊联赛</h5>
-              <p class="card-text">content 想踢球的同学明天下午三点钟操场集合!</p>
-              <button class="btn btn-warning" style='margin: 0 auto;'>参加</button>
+          <div class='say align-items-center'>
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn btn-warning" id='informationBtn' data-toggle='modal' data-target='#exampleModalLong2'>搞事情</button>
             </div>
           </div>
         </div>
@@ -238,141 +235,59 @@
             <thead>
               <tr>
                 <th scope="col">No.</th>
-                <th scope="col">社团名称</th>
-                <th scope="col">社团宣言</th>
-                <th scope="col">操作</th>
+                <th scope="col">精神小伙</th>
+                <th scope="col">想要加入</th>
+                <th scope="col">申请状态</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>足球社</td>
-                <td>一库</td>
-                <td>
-                  <button type="button" class="btn btn-success">加入</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>足球社</td>
-                <td>一库</td>
-                <td>
-                  <button type="button" class="btn btn-success">加入</button>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>足球社</td>
-                <td>一库</td>
-                <td>
-                  <button type="button" class="btn btn-success">加入</button>
-                </td>
-              </tr>
+             
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </main>
-	
+  
+  
+  
 
-  <footer>hey!</footer>
+  <footer>
+      <pre>
+                             _ooOoo_
+                            o8888888o
+                            88" . "88
+                            (| -_- |)
+                            O\  =  /O
+                         ____/`---'\____
+                       .'  \\|     |//  `.
+                      /  \\|||  :  |||//  \
+                     /  _||||| -:- |||||-  \
+                     |   | \\\  -  /// |   |
+                     | \_|  ''\---/''  |   |
+                     \  .-\__  `-`  ___/-. /
+                   ___`. .'  /--.--\  `. . __
+                ."" '<  `.___\_<|>_/___.'  >'"".
+               | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+               \  \ `-.   \_ __\ /__ _/   .-` /  /
+          ======`-.____`-.___\_____/___.-`____.-'======
+                             `=---='
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     佛祖保佑        永无BUG
+            佛曰:
+                   写字楼里写字间，写字间里程序员；
+                   程序人员写程序，又拿程序换酒钱。
+                   酒醒只在网上坐，酒醉还来网下眠；
+                   酒醉酒醒日复日，网上网下年复年。
+                   但愿老死电脑间，不愿鞠躬老板前；
+                   奔驰宝马贵者趣，公交自行程序员。
+                   别人笑我忒疯癫，我笑自己命太贱；
+                   不见满街漂亮妹，哪个归得程序员？
+      </pre>
+  </footer>
 
 
 
-    <script>
-
-     
-     $('.showTitle').eq(1).css('display','none')
-    //  let tmp = $()
-    var role = parseInt(sessionStorage.getItem('role'))
-    if(role===2){
-      $('#role').text('管理员')
-      $('#name').text(sessionStorage.getItem('name'))
-     $('#Aname').text(sessionStorage.getItem('Aname'))
-    }else if(role===0){
-      $('.showTitle').eq(0).css('display','none')
-      $('.showTitle').eq(1).css('display','block')
-      $('#pageJudge>.col').eq(1).css('display','none')
-      $('#pageJudge>.col').eq(2).css('display','none')
-
-    }else{
-   	  $('#name').text(sessionStorage.getItem('name'))
-      $('#Aname').text(sessionStorage.getItem('Aname'))
-      $('#role').text('会员')
-    }
-     $('.carousel').carousel({
-      interval: 3000
-     })
-     
-     $('#page>div').eq(0).css('display','block')
-    $('#page>div').addClass('animate__animated animate__backInDown')
-     $('#pageJudge>em').eq(0).addClass('clickClass')
-      $('#pageJudge>em').each(function(i,v){
-        $(v).click(function(){
-          $(this).addClass('clickClass').siblings().removeClass('clickClass')
-          $('#page>div').eq(i).css('display','block').siblings().css('display','none')
-          $('#page>div').eq(i).addClass('animate__animated animate__backInDown')
-                .siblings().removeClass('animate__animated animate__backInDown')
-          if(i===1){
-            $.ajax({
-              url: 'shiyan1Servlet',
-              dataType: 'json',
-              headers:{"Content-Type":"text/plain;charset=UTF-8"},
-              data: {
-                'play':'5',
-                'tableName':'user'
-                },
-              success:function(data){
-                if(!data.msg){
-                  for(var i=0;i<data.length;i++){
-                    user.push(data[i]) // 把二维数组装进去
-                  }
-
-                  for(var i=0;i<data.length;i++){
-                    $("#userBody").append("<tr>");
-                    $("#userBody").append("<td>"+data[i][0]+"</td>");
-                    let tmpRole = parseInt(data[i][5])
-                    for(var j=3;j<data[i].length;j++){
-                      if(j===5){
-                        data[i][j] = (tmpRole===3)?'管理员':'会员'
-                        user[i][j] = tmpRole
-                      }
-                      $("#userBody").append("<td>"+data[i][j]+"</td>")
-                    }
-                    if(role===2){
-                      $("#userBody").append("<td><button type='button' class='btn btn-success'>编辑</button><button type='button' class='btn btn-danger'>删除</button></td></tr>");
-                    }else{
-                      $("#userBody").append("<td><button type='button' class='btn btn-success'>添加好友</button></td>")
-                    }
-                  }
-                }else{
-                  alert("获取数据错误啦！")
-                  return false;
-                }
-              },
-              error:function(){
-                alert('请求错误！')
-              }
-            })
-          }
-        })
-      })
-
-      var associathion = []
-          ,user = []
-          ,introduce = []
-          ,information = []
-          ,joinAname = [];
-
-    $('#pageJudge>.col').each(function(i,v){
-      $(v).hover(function(){
-        $(this).addClass('animate__animated animate__jello').siblings().removeClass('animate__animated animate__jello')
-      })
-    })
-
-          
-
-    </script>
+    <script src="./play.js"></script>
 </body>
 </html>  
